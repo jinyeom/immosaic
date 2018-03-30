@@ -9,9 +9,11 @@ function vispoints(I1, I2, P1, P2, filename)
     subplot(1, 2, 2);
     imshow(I2);
     hold on;
-    plot(P2(:, 1), P2(:, 2), 'r*');
+    plot(P2(:, 1), P2(:, 2), 'b*');
     hold off;
     
-    % Save the figure
-    saveas(fig, filename);
+    % Save the figure if the filename is provided.
+    if exist('filename', 'var')
+        saveas(fig, filename);
+    end
 end

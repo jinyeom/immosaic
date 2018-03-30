@@ -10,10 +10,12 @@ function H = solveh(P1, P2)
     % Build A with the set of points before homography.
     A = zeros(2 * n, 8);
     for i = 1:n
-        x = P1(i, 1);
-        y = P2(i, 2);
-        A(2 * i - 1, :) = [x y 1 0 0 0 1 1];
-        A(2 * i, :) = [0 0 0 x y 1 1 1];
+        x1 = P1(i, 1);
+        y1 = P1(i, 2);
+        x2 = P2(i, 1);
+        y2 = P2(i, 2);
+        A(2 * i - 1, :) = [x1, y1, 1, 0, 0, 0, -(x1 * x2), -(y1 * x2)];
+        A(2 * i, :) = [0, 0, 0, x1, y1, 1, -(x1 * y2), -(y1 * y2)];
     end
     
     % Build b with the set of target points.
@@ -21,6 +23,6 @@ function H = solveh(P1, P2)
     b(1:2:2 * n) = P2(:, 1);
     b(2:2:2 * n) = P2(:, 2);
     
-    H = b \ A;
-    H = reshape([H 1], [3, 3])';
+    H = A \ b;
+    H = reshape([H; 1], [3, 3])';
 end
