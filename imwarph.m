@@ -51,6 +51,4 @@ function W = imwarph(I, J, H)
     %W(:, :, 3) = interp2(double(W(:, :, 3)), IX, IY);
     W(isnan(W)) = 0;
     W = W / 255;
-    
-    imshow(W);
 end
