@@ -15,7 +15,7 @@ function W = imwarph(I, J, H)
     maxDX = max(jn, max(P(:, 1)));
     minDY = min(1, min(P(:, 2)));
     maxDY = max(jm, max(P(:, 2)));
-    W = zeros(int32(maxDY - minDY), int32(maxDX - minDX), 3);
+    W = zeros(int32(maxDY - minDY + 1), int32(maxDX - minDX + 1), 3);
     
     % First transfer the base image.
     % This is a part of the "stitching the images". It's easier to put the
@@ -45,10 +45,10 @@ function W = imwarph(I, J, H)
     end
 
     % This function doensn't seem to be necessary...
-    % Weird, but the result looks good enough I think.
-    %W(:, :, 1) = interp2(double(W(:, :, 1)), IX, IY);    
-    %W(:, :, 2) = interp2(double(W(:, :, 2)), IX, IY);
-    %W(:, :, 3) = interp2(double(W(:, :, 3)), IX, IY);
+    % Weird, but the result looks good regardless I think.
+    W(:, :, 1) = interp2(double(W(:, :, 1)), X - minDX, Y - minDY);    
+    W(:, :, 2) = interp2(double(W(:, :, 2)), X - minDX, Y - minDY);
+    W(:, :, 3) = interp2(double(W(:, :, 3)), X - minDX, Y - minDY);
     W(isnan(W)) = 0;
     W = W / 255;
 end
