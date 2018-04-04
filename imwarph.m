@@ -7,14 +7,15 @@ function W = imwarph(I, J, H)
 
     % Map all pixel values to warped image.
     [IX, IY] = meshgrid(1:in, 1:im); 
-    P = round(homography([IX(:), IY(:)], H));   
-
+    P = round(homography([IX(:), IY(:)], H));
+    
     % Coordinates of destination image.
     % This image should be able to contain both images.
     minDX = min(1, min(P(:, 1)));
     maxDX = max(jn, max(P(:, 1)));
     minDY = min(1, min(P(:, 2)));
     maxDY = max(jm, max(P(:, 2)));
+    
     W = zeros(int32(maxDY - minDY + 1), int32(maxDX - minDX + 1), 3);
     
     % First transfer the base image.
